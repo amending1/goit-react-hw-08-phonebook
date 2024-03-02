@@ -29,4 +29,6 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
+export const logout = createAction('auth/logout');
+
 //Akcje to obiekty, które opisują zmianę stanu aplikacji. Mam trzy akcje: addContact, deleteContact, setFilter. Redux Toolkit pozwala na tworzenie akcji za pomocą 'createAction'
