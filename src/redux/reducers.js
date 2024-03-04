@@ -1,9 +1,8 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   addContact,
   deleteContact,
-  setFilter,
-  fetchContacts,
+    fetchContacts,
 } from './actions.js';
 
 const initialState = {
@@ -11,24 +10,54 @@ const initialState = {
   filter: '',
 };
 
-//Jako pierwszy argument przekazywane jest initialState.contacts, czyli początkowa wartość dla tej części stanu. W ciele reduktora używam metody builder, która pozwala na definiowanie akcji i ich obsługę.
-//Za pomocą builder.addCase() okreslam, jak reducer ma reagować na akcje. W przypadku akcji 'addContact', do stanu dodawany jest nowy kontakt zawarty w action.payload. W przypadku akcji 'deleteContact', zwracana jest nowa tablica kontaktów, która jest filtrowana, aby usunąć kontakt o id zgodnym z action.payload
-export const contactsReducer = createReducer(initialState.contacts, builder => {
-  builder
-    .addCase(fetchContacts.fulfilled, (state, action) => {
-      return action.payload;
-    })
-    .addCase(addContact.fulfilled, (state, action) => {
-      state.push(action.payload);
-    })
-    .addCase(deleteContact.fulfilled, (state, action) => {
-      return state.filter(contact => contact.id !== action.payload);
-    });
+//REFAKTORYZACJA
+export const contactsSlice = createSlice({
+  name: 'contacts',
+  initialState,
+  reducers: {
+    setFilter(state, action) {
+      state.filter = action.payload;
+    },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.contacts = action.payload;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.contacts.push(action.payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
+      });
+  },
 });
 
-//Za pomocą builder.addCase() określam jak reducer ma reagować na akcję 'setFilter'. W przypadku tej akcji, stan filtra jest aktualizowany na podstawie action.payload, który zawiera nową wartość filtra
-export const filterReducer = createReducer(initialState.filter, builder => {
-  builder.addCase(setFilter, (state, action) => action.payload);
-});
+export const { setFilter } = contactsSlice.reducers;
+
+export default contactsSlice.reducer;
+
+
+
+//PRZED REFAKTORYZACJĄ
+//Jako pierwszy argument przekazywane jest initialState.contacts, czyli początkowa wartość dla tej części stanu. W ciele reduktora używam metody builder, która pozwala na definiowanie akcji i ich obsługę.
+//Za pomocą builder.addCase() okreslam, jak reducer ma reagować na akcje. W przypadku akcji 'addContact', do stanu dodawany jest nowy kontakt zawarty w action.payload. W przypadku akcji 'deleteContact', zwracana jest nowa tablica kontaktów, która jest filtrowana, aby usunąć kontakt o id zgodnym z action.payload
+// export const contactsReducer = createReducer(initialState.contacts, builder => {
+//   builder
+//     .addCase(fetchContacts.fulfilled, (state, action) => {
+//       return action.payload;
+//     })
+//     .addCase(addContact.fulfilled, (state, action) => {
+//       state.push(action.payload);
+//     })
+//     .addCase(deleteContact.fulfilled, (state, action) => {
+//       return state.filter(contact => contact.id !== action.payload);
+//     });
+// });
+
+// //Za pomocą builder.addCase() określam jak reducer ma reagować na akcję 'setFilter'. W przypadku tej akcji, stan filtra jest aktualizowany na podstawie action.payload, który zawiera nową wartość filtra
+// export const filterReducer = createReducer(initialState.filter, builder => {
+//   builder.addCase(setFilter, (state, action) => action.payload);
+// });
 
 //tu reduktory Redux obsługują akcje i aktualizują stan aplikacji

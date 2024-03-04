@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { contactsReducer, filterReducer } from './reducers.js';
+import { contactsSlice } from './reducers.js';
 import storage from'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import  { authReducer } from './auth/authSlice';
@@ -13,8 +13,8 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
-    contacts: contactsReducer,
-    filter: filterReducer()
+    contacts: contactsSlice,
+    // filter: filterReducer() do poprawy
   }
 });
 

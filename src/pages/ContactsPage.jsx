@@ -6,10 +6,10 @@ import Filter from '../components/Filter';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addContact,
-  setFilter,
   deleteContact,
   fetchContacts,
 } from '../redux/actions.js';
+import { setFilter } from '../redux/reducers.js';
 
 function ContactsPage() {
 //za pomocą hooka 'useSelector' pobieram fragmenty stanu z store'a, czyli listę kontaktów (contacts) i filtr (filter), który będzie używany do filtrowania kontaktów

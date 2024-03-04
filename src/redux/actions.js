@@ -1,7 +1,7 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const setFilter = createAction('filter/set');
+// export const setFilter = createAction('filter/set');
 
 const BASE_URL = 'https://65d9c7b0bcc50200fcdc192b.mockapi.io/contacts/contacts';
 
