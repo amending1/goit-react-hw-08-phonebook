@@ -1,12 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { contactsReducer, filterReducer } from './reducers.js';
+import storage from'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import  { authReducer } from './auth/authSlice';
 
-export default configureStore({
+const authPersistConfig = {
+  key: 'auth', 
+  storage,
+  blacklist: ['token']
+  };
+
+export const store = configureStore({
   reducer: {
+    auth: persistReducer(authPersistConfig, authReducer),
     contacts: contactsReducer,
-    filter: filterReducer
+    filter: filterReducer()
   }
 });
+
+export const persist = persistStore(store);
 
 
 //tu przechowuję dane aplikacji

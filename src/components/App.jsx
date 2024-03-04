@@ -5,7 +5,7 @@ import PrivateRoute from './PrivateRoute.jsx';
 import RestrictedRoute from './RestrictedRoute.jsx';
 // import UserMenu from './UserMenu.jsx';
 import ContactsPage from '../pages/ContactsPage.jsx';
-// import HomePage from '../pages/HomePage.jsx';
+import HomePage from '../pages/HomePage.jsx';
 import LoginPage from '../pages/LoginPage.jsx';
 import RegisterPage from '../pages/RegisterPage.jsx';
 import { refreshUser } from '../redux/auth/operations.js'
@@ -30,6 +30,7 @@ return (
   <Router>
     <Navigation/>
     <Routes>
+      <Route index element={<HomePage />}/>
       <Route path="/register" element={<RestrictedRoute redirectTo='/contacts' component={<RegisterPage />} />} />
       <Route path="/login" element={<RestrictedRoute redirectTo='/contacts' component={<LoginPage />} />} />
       <Route path="/contacts" element={<PrivateRoute redirectTo='/login' component={<ContactsPage />} />} />
