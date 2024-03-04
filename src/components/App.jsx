@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navigation from './Navigation.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
 import RestrictedRoute from './RestrictedRoute.jsx';
@@ -10,24 +10,25 @@ import LoginPage from '../pages/LoginPage.jsx';
 import RegisterPage from '../pages/RegisterPage.jsx';
 import { refreshUser } from '../redux/auth/operations.js'
 import { useDispatch } from 'react-redux';
-// import { useAuth } from '../redux/auth/operations.js'
+import { useAuth } from '../redux/auth/operations.js'
 
 
 export function App() {
   //Za pomocą hooka 'useDispatch' pobieram funkcję 'dispatch', która pozwala na wysyłanie akcji do store'a
   const dispatch = useDispatch();
-  // const { isRefreshing } = useAuth();
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
   
-// isRefreshing ?  (
-//   <b>Refreshing user...</b>
-//   ) :
+
 return (
-  <Router>
+  isRefreshing ?  (
+  <b>Refreshing user...</b>
+  ) : 
+  <BrowserRouter>
     <Navigation/>
     <Routes>
       <Route index element={<HomePage />}/>
@@ -35,7 +36,7 @@ return (
       <Route path="/login" element={<RestrictedRoute redirectTo='/contacts' component={<LoginPage />} />} />
       <Route path="/contacts" element={<PrivateRoute redirectTo='/login' component={<ContactsPage />} />} />
     </Routes>
-  </Router>
+  </BrowserRouter>
 );
 }
 

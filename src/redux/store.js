@@ -1,25 +1,41 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { contactsSlice } from './reducers.js';
-import storage from'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
-import  { authReducer } from './auth/authSlice';
+import storage from 'redux-persist/lib/storage';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import { authReducer } from './auth/authSlice';
 
 const authPersistConfig = {
-  key: 'auth', 
+  key: 'auth',
   storage,
-  blacklist: ['token']
-  };
+  blacklist: ['token'],
+};
 
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
     contacts: contactsSlice,
     // filter: filterReducer() do poprawy
-  }
+  },
+
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+  devTools: process.env.NODE_ENV === 'development',
 });
 
 export const persist = persistStore(store);
-
 
 //tu przechowuję dane aplikacji
 //tu definiuję reduktory, które będą zarządzać poszczególnymi częściami stanu aplikacji

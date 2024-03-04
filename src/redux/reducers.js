@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  addContact,
-  deleteContact,
-    fetchContacts,
-} from './actions.js';
+import { addContact, deleteContact, fetchContacts } from './actions.js';
 
 const initialState = {
   contacts: [],
@@ -28,16 +24,16 @@ export const contactsSlice = createSlice({
         state.contacts.push(action.payload);
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
-        state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== action.payload
+        );
       });
   },
 });
 
-export const { setFilter } = contactsSlice.reducers;
+export const { setFilter } = contactsSlice.actions;
 
-export default contactsSlice.reducer;
-
-
+export default contactsSlice.actions;
 
 //PRZED REFAKTORYZACJĄ
 //Jako pierwszy argument przekazywane jest initialState.contacts, czyli początkowa wartość dla tej części stanu. W ciele reduktora używam metody builder, która pozwala na definiowanie akcji i ich obsługę.
