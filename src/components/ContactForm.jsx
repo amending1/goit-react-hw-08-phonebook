@@ -85,3 +85,5 @@ ContactForm.propTypes = {
 };
 
 export default ContactForm;
+
+//tu mam komponent formularza do dodawania nowych kontaktów. Po wypełnieniu formularza i przesłaniu go, dane są przesyłane do Redux za pomocą akcji addContact.

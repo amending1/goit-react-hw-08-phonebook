@@ -40,3 +40,5 @@ ContactList.propTypes = {
 };
 
 export default ContactList;
+
+//tu mam komponent do renderowania listy kontaktów. Pozwala na usuwanie kontaktów poprzez akcję deleteContact.

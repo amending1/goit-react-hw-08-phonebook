@@ -53,3 +53,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+//strona odpowiedzialne za logowanie użytkownika. Dane są wysyłane do serwera za pomocą zapytań HTTP.

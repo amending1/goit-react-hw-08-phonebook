@@ -8,5 +8,7 @@ export default configureStore({
   }
 });
 
-//tu definiuję reduktory, które będą zarządzać poszczególnymi częścimi stanu aplikacji
+
+//tu przechowuję dane aplikacji
+//tu definiuję reduktory, które będą zarządzać poszczególnymi częściami stanu aplikacji
 // mam tu dwa reducery: 'contactsReducer ' (zarządza listą kontaktów) i 'filterReducer' (zarządza filtrem dla kontaktów). To są funkcje, które określają, jak stan aplikacji zmienia się w odpowiedzi na akcje.

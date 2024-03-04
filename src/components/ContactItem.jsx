@@ -15,3 +15,5 @@ ContactItem.propTypes = {
 };
 
 export default ContactItem;
+
+//tu mam komponent do renderowania pojedynczego kontaktu

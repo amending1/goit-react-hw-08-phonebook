@@ -30,3 +30,5 @@ export const contactsReducer = createReducer(initialState.contacts, builder => {
 export const filterReducer = createReducer(initialState.filter, builder => {
   builder.addCase(setFilter, (state, action) => action.payload);
 });
+
+//tu reduktory Redux obsługują akcje i aktualizują stan aplikacji

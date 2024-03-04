@@ -29,6 +29,6 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
-export const logout = createAction('auth/logout');
 
+//Akcje Redux są wykonywane w odpowiedzi na interakcje użytkownika lub zdarzenia w aplikacji, część tych akcji wykonuje zapytania do serwera za pomocą Axios
 //Akcje to obiekty, które opisują zmianę stanu aplikacji. Mam trzy akcje: addContact, deleteContact, setFilter. Redux Toolkit pozwala na tworzenie akcji za pomocą 'createAction'

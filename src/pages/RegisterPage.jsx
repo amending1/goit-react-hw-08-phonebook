@@ -53,3 +53,6 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+
+//strona odpowiedzialne za rejestrację użytkownika. Dane są wysyłane do serwera za pomocą zapytań HTTP.
