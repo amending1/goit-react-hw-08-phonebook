@@ -2,13 +2,13 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function RestrictedRoute({ component: Component, redirectTo, ...rest }) {
+function RestrictedRoute({ component: Component, redirectTo }) {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to={redirectTo} />;
   } else {
-    return <Component {...rest} />;
+    return Component;
   }
 }
 export default RestrictedRoute;
