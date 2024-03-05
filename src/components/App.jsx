@@ -8,36 +8,46 @@ import ContactsPage from '../pages/ContactsPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import LoginPage from '../pages/LoginPage.jsx';
 import RegisterPage from '../pages/RegisterPage.jsx';
-import { refreshUser } from '../redux/auth/operations.js'
+import { refreshUser } from '../redux/auth/operations.js';
 import { useDispatch } from 'react-redux';
-import { useAuth } from '../redux/auth/operations.js'
-
 
 export function App() {
   //Za pomocą hooka 'useDispatch' pobieram funkcję 'dispatch', która pozwala na wysyłanie akcji do store'a
   const dispatch = useDispatch();
-  const { isRefreshing } = useAuth();
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  
-
-return (
-  isRefreshing ?  (
-  <b>Refreshing user...</b>
-  ) : 
-  <BrowserRouter>
-    <Navigation/>
-    <Routes>
-      <Route index element={<HomePage />}/>
-      <Route path="/register" element={<RestrictedRoute redirectTo='/contacts' component={<RegisterPage />} />} />
-      <Route path="/login" element={<RestrictedRoute redirectTo='/contacts' component={<LoginPage />} />} />
-      <Route path="/contacts" element={<PrivateRoute redirectTo='/login' component={<ContactsPage />} />} />
-    </Routes>
-  </BrowserRouter>
-);
+  return (
+    <BrowserRouter>
+      <Navigation />
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 // w App.jsx definiuję routing za pomocą react-router-dom oraz renderuję komponent nawigacji (Navigation) i komponenty stron (LoginPage, RegisterPage, ContactsPage). Tu też używam Redux do pobierania danych użytkownika poprzez akcję refreshUser
