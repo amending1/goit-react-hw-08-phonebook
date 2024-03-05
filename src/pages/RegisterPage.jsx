@@ -19,7 +19,7 @@ const RegisterPage = () => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        'https://connections-api.herokuapp.com/auth/register',
+        'https://connections-api.herokuapp.com/users/signup',
         formData
       );
       console.log(response.data);
