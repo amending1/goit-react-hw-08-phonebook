@@ -1,9 +1,16 @@
 import { useState } from 'react';
-import css from './phonebook.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { addContact } from '../redux/actions';
+import { styled } from '@mui/system';
+import { Button, TextField, Typography} from '@mui/material';
+
+const FormContainer = styled('form')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '5px',
+});
 
 function ContactForm({ handleSubmit }) {
   const [name, setName] = useState('');
@@ -46,11 +53,9 @@ function ContactForm({ handleSubmit }) {
   };
 
   return (
-    <div>
-      <form className={css['form-container']} onSubmit={handleFormSubmit}>
-        <p>Name:</p>
-        <label>
-          <input
+    <FormContainer onSubmit={handleFormSubmit}>
+    <Typography variant="p">Name:</Typography>
+    <TextField
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -58,11 +63,9 @@ function ContactForm({ handleSubmit }) {
             required
             value={name}
             onChange={handleChange}
-          />
-        </label>
-        <p>Number:</p>
-        <label>
-          <input
+            />
+            <Typography variant="p">Number:</Typography>
+            <TextField
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -71,12 +74,10 @@ function ContactForm({ handleSubmit }) {
             value={number}
             onChange={handleChange}
           />
-        </label>
-        <button className={css['submit-button']} type="submit" method="POST">
-          Add contact
-        </button>
-      </form>
-    </div>
+        <Button type="submit" variant="contained" sx={{ width: '120px', borderRadius: '3px', alignSelf: 'center' }}>
+        Add contact
+      </Button>
+    </FormContainer>
   );
 }
 
