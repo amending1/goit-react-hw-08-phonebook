@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/auth/operations';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -18,11 +21,7 @@ const RegisterPage = () => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        'https://connections-api.herokuapp.com/users/signup',
-        formData
-      );
-      console.log(response.data);
+      await dispatch(register(formData));
     } catch (error) {
       console.error(error);
     }
@@ -53,6 +52,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
 
 //strona odpowiedzialne za rejestrację użytkownika. Dane są wysyłane do serwera za pomocą zapytań HTTP.

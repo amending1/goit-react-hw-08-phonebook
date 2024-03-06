@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/auth/operations';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -18,11 +20,8 @@ const LoginPage = () => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        'https://connections-api.herokuapp.com/users/login',
-        formData
-      );
-      console.log(response.data);
+      await dispatch(login(formData));
+    
     } catch (error) {
       console.error(error);
     }
