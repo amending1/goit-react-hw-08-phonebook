@@ -1,8 +1,7 @@
 import React from 'react';
-import ContactItem from './ContactItem.jsx';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from '../redux/actions.js';
+
+// import { deleteContact } from '../redux/actions.js';
 import { styled } from '@mui/system';
 import { Button, Typography } from '@mui/material';
 
@@ -20,21 +19,20 @@ const DeleteButton = styled(Button)({
   fontSize: '14px',
 });
 
-const ContactList = ({  name, number }) => {
-  const dispatch = useDispatch();
-
-  //po kliknięciu przycisku, funkcja wywołuje dispatch(deleteContact(id)), czyli wysyła akcję 'deleteContact' z identyfikatorem usuwanego kontaktu do store'a
-  const handleDeleteContact = id => {
-    dispatch(deleteContact(id));
-  };
-
+const ContactList = ({ contacts, onDeleteContact }) => {
+ 
   return (
     <ListItem>
-      <Typography>{name}: {number}</Typography>
-      <DeleteButton onClick={handleDeleteContact}>Delete</DeleteButton>
+      <Typography>{contacts}</Typography>
+      <DeleteButton onClick={onDeleteContact}>Delete</DeleteButton>
     </ListItem>
   );
 };
+ContactList.propTypes = {
+  contacts: PropTypes.array.isRequired,
+};
+
+export default ContactList;
 
 //   return (
 //     <ul>
@@ -53,10 +51,6 @@ const ContactList = ({  name, number }) => {
 //   );
 // };
 
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-};
 
-export default ContactList;
 
 //tu mam komponent do renderowania listy kontaktów. Pozwala na usuwanie kontaktów poprzez akcję deleteContact.

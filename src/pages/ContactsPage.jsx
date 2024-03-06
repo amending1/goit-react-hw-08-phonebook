@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ContactForm from '../components/ContactForm.jsx';
 import ContactList from '../components/ContactList.jsx';
 import Filter from '../components/Filter';
@@ -7,6 +7,7 @@ import { addContact, deleteContact, fetchContacts } from '../redux/actions.js';
 import { setFilter } from '../redux/reducers.js';
 import { styled } from '@mui/system';
 import { Container, Typography } from '@mui/material';
+import { nanoid } from 'nanoid';
 
 const StyledContainer = styled(Container)({
   width: '500px',
@@ -22,6 +23,8 @@ function ContactsPage() {
   const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
   //na podstawie zależności [dispatch] apka sprawdza, czy są zapisane kontakty w localStorage. Jeśli są zapisane, są one parsowane z localStorage i wysyłane do store'a za pomocą akcji 'addContact'
   useEffect(() => {
@@ -29,8 +32,28 @@ function ContactsPage() {
   }, [dispatch]);
 
   //ta funkcja jest wywoływana w momencie przesłania formularza z danymi kontaktu. Wysyła akcję 'addContact' do store'a z nowym kontaktem
-  const handleSubmit = contact => {
-    dispatch(addContact(contact));
+  // const handleSubmit = contact => {
+  //   dispatch(addContact(contact));
+  // };
+  const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(addContact({ name, number }));
+    // funkcja sprawdza, czy pole name nie jest puste. Jeśli jest, przerywa dalsze wykonanie funkcji
+    if (name.trim() === '') return;
+
+    // funkcja tworzy nowy obiekt zawierający wartości wprowadzone przez użytkownika dla  oraz unikalne id wygenerowane przez nanoid()
+    const newContact = {
+      name,
+      number,
+      id: nanoid(),
+    };
+
+    //wysyła akcję addContact(newContact) do store'a za pomocą funkcji 'dispatch'
+    dispatch(addContact(newContact));
+
+    //po wysłaniu akcji czyszczone są pola formularza
+    setName('');
+    setNumber('');
   };
 
   //ta funkcja jest przekazywana do komponentu ContactList jako callback przy usuwaniu kontaktu.Po kliknięciu przycisku usuwania, funkcja wysyła akcję 'deleteContact' z identyfikatorem usuwanego kontaktu
@@ -51,7 +74,7 @@ function ContactsPage() {
   return (
     <StyledContainer>
       <Typography variant="h3">Phonebook</Typography>
-      <ContactForm contacts={contacts} handleSubmit={handleSubmit} />
+      <ContactForm handleSubmit={handleSubmit} />
       <Typography variant="h4">Contacts</Typography>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <ContactList
