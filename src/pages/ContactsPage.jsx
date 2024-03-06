@@ -39,7 +39,7 @@ function ContactsPage() {
   };
 
   // wyfiltrowane kontakty są przekazywane do komponentu 'ContactList' jako właściwość contacts
-      const filteredContacts = contacts.filter(contact =>
+      const filteredContacts = contacts?.filter(contact =>
     contact.name?.toLowerCase().includes(filter)
   );
 
