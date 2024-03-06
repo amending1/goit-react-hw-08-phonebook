@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 function RestrictedRoute({ component: Component, redirectTo }) {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
-  if (!isLoggedIn) {
+  if (isLoggedIn) {
     return <Navigate to={redirectTo} />;
   } else {
     return Component;

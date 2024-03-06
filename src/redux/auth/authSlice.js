@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register } from './operations.js';
+import { register, login, refreshUser } from './operations.js';
 
 const initialState = {
   loading: false,
@@ -12,18 +12,45 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: builder => {
-    builder.addCase(register.pending, state => {
-      state.loading = true;
-    });
-    builder.addCase(register.fulfilled, (state, action) => {
-      console.log({ action });
-      state.loading = false;
-      state.token = action.payload.token;
-      state.user = action.payload.user;
-      state.isLoggedIn = true;
-    });
-    builder.addCase(register.rejected, () => {});
+    builder
+      .addCase(register.pending, state => {
+        state.loading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+        state.isLoggedIn = true;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(login.pending, state => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+        state.isLoggedIn = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(refreshUser.pending, state => {
+        state.loading = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isLoggedIn = true;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
-
 export const authReducer = authSlice.reducer;
