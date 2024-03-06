@@ -6,6 +6,7 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    name: '',
   });
 
   const dispatch = useDispatch();
@@ -36,6 +37,13 @@ const RegisterPage = () => {
           name="email"
           placeholder="Email"
           value={formData.email}
+          onChange={handleChange}
+        />
+        <input
+          type="name"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
           onChange={handleChange}
         />
         <input
