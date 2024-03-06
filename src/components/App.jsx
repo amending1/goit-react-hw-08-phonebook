@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navigation from './Navigation.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-import RestrictedRoute from './RestrictedRoute.jsx';
+// import RestrictedRoute from './RestrictedRoute.jsx';
 // import UserMenu from './UserMenu.jsx';
 import ContactsPage from '../pages/ContactsPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
