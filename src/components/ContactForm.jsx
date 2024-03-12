@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/actions.js';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import { Button, TextField, Typography } from '@mui/material';
+import { nanoid } from 'nanoid';
 
 const FormContainer = styled('form')({
   display: 'flex',
@@ -9,10 +12,12 @@ const FormContainer = styled('form')({
   gap: '5px',
 });
 
-function ContactForm({ handleSubmit }) {
+
+function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
+  const dispatch = useDispatch();
+ 
   const handleChange = event => {
     //destrukturyzuję właściwości obiektu event.target, aby uzyskać dostęp do name (nazwa pola) oraz value (wartość wprowadzona przez użytkownika w polu formularza), które są przesyłane przez zdarzenie onChange
     const { name, value } = event.target;
@@ -22,6 +27,28 @@ function ContactForm({ handleSubmit }) {
       setNumber(value);
     }
   };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    // funkcja sprawdza, czy pole name nie jest puste. Jeśli jest, przerywa dalsze wykonanie funkcji
+    if (name.trim() === '') return;
+
+    // funkcja tworzy nowy obiekt zawierający wartości wprowadzone przez użytkownika dla  oraz unikalne id wygenerowane przez nanoid()
+    const newContact = {
+      name,
+      number,
+      id: nanoid(),
+    };
+
+    //wysyła akcję addContact(newContact) do store'a za pomocą funkcji 'dispatch'
+    dispatch(addContact(newContact));
+
+    //po wysłaniu akcji czyszczone są pola formularza
+    setName('');
+    setNumber('');
+  };
+  
 
   return (
     <FormContainer onSubmit={handleSubmit}>

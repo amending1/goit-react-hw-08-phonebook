@@ -20,16 +20,22 @@ const DeleteButton = styled(Button)({
 });
 
 const ContactList = ({ contacts, onDeleteContact }) => {
- 
   return (
-    <ListItem>
-      <Typography>{contacts}</Typography>
-      <DeleteButton onClick={onDeleteContact}>Delete</DeleteButton>
-    </ListItem>
+    <ul>
+      {contacts.map((contact, index) => (
+        <ListItem key={index}>
+          <Typography>{contacts}</Typography>
+          <DeleteButton onClick={() => onDeleteContact(index)}>
+            Delete
+          </DeleteButton>
+        </ListItem>
+      ))}
+    </ul>
   );
 };
 ContactList.propTypes = {
   contacts: PropTypes.array.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactList;
@@ -50,7 +56,5 @@ export default ContactList;
 //     </ul>
 //   );
 // };
-
-
 
 //tu mam komponent do renderowania listy kontaktów. Pozwala na usuwanie kontaktów poprzez akcję deleteContact.
