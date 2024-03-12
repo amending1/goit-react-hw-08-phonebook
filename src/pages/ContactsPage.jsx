@@ -17,7 +17,7 @@ const StyledContainer = styled(Container)({
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.9)',
 });
 
-function ContactsPage({ handleSubmit }) {
+function ContactsPage() {
   //za pomocą hooka 'useSelector' pobieram fragmenty stanu z store'a, czyli listę kontaktów (contacts) i filtr (filter), który będzie używany do filtrowania kontaktów
   //za pomocą hooka 'useDispatch' pobieram funkcję 'dispatch', która pozwala na wysyłanie akcji do store'a
   const contacts = useSelector(state => state.contacts.contacts);
@@ -37,8 +37,8 @@ function ContactsPage({ handleSubmit }) {
   
 
   //ta funkcja jest przekazywana do komponentu ContactList jako callback przy usuwaniu kontaktu.Po kliknięciu przycisku usuwania, funkcja wysyła akcję 'deleteContact' z identyfikatorem usuwanego kontaktu
-  const handleDeleteContact = id => {
-    dispatch(deleteContact(id));
+  const handleDeleteContact = contactId=> {
+    dispatch(deleteContact(contactId));
   };
 
   // ta funkcja jest wywoływana przy zmianie wartości pola filtru. W tej funkcji wartość pola jest wysyłana za pomocą akcji 'setFilter' do store'a
@@ -48,7 +48,7 @@ function ContactsPage({ handleSubmit }) {
 
   // wyfiltrowane kontakty są przekazywane do komponentu 'ContactList' jako właściwość contacts
   const filteredContacts = contacts?.filter(contact =>
-    contact.name?.toLowerCase().includes(filter)
+    contact.name?.toLowerCase().includes(filter?.toLowerCase())
   );
 
   return (
@@ -57,10 +57,13 @@ function ContactsPage({ handleSubmit }) {
       <ContactForm />
       <Typography variant="h4">Contacts</Typography>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
-      <ContactList
+      {/* Sprawdzenie, czy filteredContacts istnieje przed przekazaniem go do ContactList */}
+      {filteredContacts ? (<ContactList
         contacts={filteredContacts}
         onDeleteContact={handleDeleteContact}
-      />
+      />) : (
+        <p>Loading...</p>
+      )}
     </StyledContainer>
   );
 }

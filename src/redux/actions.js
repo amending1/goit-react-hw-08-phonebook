@@ -5,9 +5,21 @@ import axios from 'axios';
 
 const BASE_URL = 'https://connections-api.herokuapp.com/contacts';
 
-export const fetchContacts = createAsyncThunk('contacts/fetch', async () => {
-  const response = await axios.get(BASE_URL);
-  return response.data;
+export const fetchContacts = createAsyncThunk('contacts/fetch', async (_, thunkAPI) => {
+  const { getState } = thunkAPI;
+  const state = getState();
+  const token = state.auth.token;
+  
+  try {
+    const response = await axios.get(BASE_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error while fetching contacts:', error);
+  }
 });
 
 export const addContact = createAsyncThunk('contacts/save', async contact => {

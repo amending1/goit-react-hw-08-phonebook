@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../redux/actions.js';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import { Button, TextField, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
@@ -12,12 +11,11 @@ const FormContainer = styled('form')({
   gap: '5px',
 });
 
-
 function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
- 
+
   const handleChange = event => {
     //destrukturyzuję właściwości obiektu event.target, aby uzyskać dostęp do name (nazwa pola) oraz value (wartość wprowadzona przez użytkownika w polu formularza), które są przesyłane przez zdarzenie onChange
     const { name, value } = event.target;
@@ -30,7 +28,6 @@ function ContactForm() {
 
   const handleSubmit = event => {
     event.preventDefault();
-
     // funkcja sprawdza, czy pole name nie jest puste. Jeśli jest, przerywa dalsze wykonanie funkcji
     if (name.trim() === '') return;
 
@@ -48,7 +45,6 @@ function ContactForm() {
     setName('');
     setNumber('');
   };
-  
 
   return (
     <FormContainer onSubmit={handleSubmit}>
@@ -82,10 +78,6 @@ function ContactForm() {
     </FormContainer>
   );
 }
-
-ContactForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-};
 
 export default ContactForm;
 

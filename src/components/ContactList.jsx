@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // import { deleteContact } from '../redux/actions.js';
 import { styled } from '@mui/system';
-import { Button, Typography } from '@mui/material';
+import { List, Button, Typography } from '@mui/material';
 
 const ListItem = styled('li')({
   display: 'flex',
@@ -21,8 +21,9 @@ const DeleteButton = styled(Button)({
 
 const ContactList = ({ contacts, onDeleteContact }) => {
   return (
-    <ul>
-      {contacts.map((contact, index) => (
+    <List>
+        {/* Sprawdzenie, czy contacts nie są puste przed mapowaniem */}
+      {contacts && contacts.map((contact, index) => (
         <ListItem key={index}>
           <Typography>{contacts}</Typography>
           <DeleteButton onClick={() => onDeleteContact(index)}>
@@ -30,7 +31,7 @@ const ContactList = ({ contacts, onDeleteContact }) => {
           </DeleteButton>
         </ListItem>
       ))}
-    </ul>
+    </List>
   );
 };
 ContactList.propTypes = {
