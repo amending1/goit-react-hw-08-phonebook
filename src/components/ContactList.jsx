@@ -23,10 +23,10 @@ const ContactList = ({ contacts, onDeleteContact }) => {
   return (
     <List>
         {/* Sprawdzenie, czy contacts nie są puste przed mapowaniem */}
-      {contacts && contacts.map((contact, index) => (
-        <ListItem key={index}>
-          <Typography>{contacts}</Typography>
-          <DeleteButton onClick={() => onDeleteContact(index)}>
+      {contacts && contacts.map(contact => (
+        <ListItem key={contact.id}>
+          <Typography>{contact.name} : {contact.number} </Typography>
+          <DeleteButton onClick={() => onDeleteContact(contact.id)}>
             Delete
           </DeleteButton>
         </ListItem>
