@@ -22,20 +22,24 @@ export const fetchContacts = createAsyncThunk('contacts/fetch', async (_, thunkA
   }
 });
 
-export const addContact = createAsyncThunk('contacts/save', async contact => {
+export const addContact = createAsyncThunk('contacts/save', async (contact, thunkAPI) => {
   try {
     const response = await axios.post(BASE_URL, contact);
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error('Error while adding contact:', error);
+    return thunkAPI.rejectWithValue(error.message); //  umożliwia przechwytywanie błędów i przekazywanie ich z powrotem do Redux Toolkit. Dzięki temu aplikacja będzie mogła zareagować na błąd poprawnie, np. wyświetlając stosowne komunikaty dla użytkownika
+  }
 });
 
-export const deleteContact = createAsyncThunk(
-  'contacts/remove',
-  async contactId => {
-    await axios.delete(BASE_URL + `/${contactId}`);
+export const deleteContact = createAsyncThunk('contacts/delete', async (contactId, thunkAPI) => {
+  try {
+    await axios.delete(`${BASE_URL}/${contactId}`);
     return contactId;
+  } catch (error) {
+    console.error('Error while deleting contact:', error);
   }
-);
+});
 
 //Akcje Redux są wykonywane w odpowiedzi na interakcje użytkownika lub zdarzenia w aplikacji, część tych akcji wykonuje zapytania do serwera za pomocą Axios
 //Akcje to obiekty, które opisują zmianę stanu aplikacji. Mam trzy akcje: addContact, deleteContact, setFilter. Redux Toolkit pozwala na tworzenie akcji za pomocą 'createAction'

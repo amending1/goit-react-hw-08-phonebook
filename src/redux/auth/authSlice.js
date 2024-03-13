@@ -44,12 +44,14 @@ const authSlice = createSlice({
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isLoggedIn = true;
       })
       .addCase(refreshUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        state.user = {};
+        state.isLogged = false;
       });
   },
 });
